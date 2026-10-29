@@ -1,100 +1,123 @@
 [gd_scene format=3 uid="uid://dkhcg7o7hb242"]
 
 [ext_resource type="Script" uid="uid://5scrr4yrj8vs" path="res://main.gd" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://boivbhrxo0hv3" path="res://grabbable_grid.gd" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://1aaojft0vo0w" path="res://xr_grab_handler.gd" id="2_h2yge"]
+[ext_resource type="Script" uid="uid://c48qagxbu5i6b" path="res://patch_window.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://h77lw26ekbm6" path="res://spawn_menu.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://criwrmt7nwcrl" path="res://message_box.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://oumi6de0hcsi" path="res://number_box.gd" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://co7ug0yfufdxu" path="res://symbol_box.gd" id="6_7mycd"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_440k2"]
-size = Vector3(0.05, 0.05, 0.1)
+[sub_resource type="BoxMesh" id="BoxMesh_m5ej7"]
+size = Vector3(0.1, 0.1, 0.2)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_pfanf"]
+radius = 0.05
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_qu261"]
+[sub_resource type="BoxMesh" id="BoxMesh_vkmgk"]
+size = Vector3(0.1, 0.1, 0.2)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7dm0k"]
 viewport_path = NodePath("PatchWindowViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0c4um"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig7tw"]
 resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_qu261")
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_7dm0k")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_s3ndk"]
-material = SubResource("StandardMaterial3D_0c4um")
+[sub_resource type="QuadMesh" id="QuadMesh_pfanf"]
+material = SubResource("StandardMaterial3D_ig7tw")
+size = Vector2(1, 0.75)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_440k2"]
-size = Vector3(1, 0.7, 0.05)
+[sub_resource type="BoxShape3D" id="BoxShape3D_pfanf"]
+size = Vector3(1, 0.75, 0.05)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hsqb2"]
-albedo_color = Color(0, 0, 0, 1)
-stencil_flags = 2
+[sub_resource type="BoxMesh" id="BoxMesh_pfanf"]
+size = Vector3(0.065, 0.05, 0.05)
 
-[sub_resource type="QuadMesh" id="QuadMesh_oeucq"]
-material = SubResource("StandardMaterial3D_hsqb2")
-size = Vector2(1, 0.7)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_yvwh5"]
-size = Vector3(1.2, 0.9, 0.25)
-
-[node name="Node3D" type="Node3D" unique_id=1468989858]
+[node name="Main" type="Node3D" unique_id=1665701028]
 script = ExtResource("1_ig7tw")
 
-[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=791545551]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1734007004]
 
-[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1961677754]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=725017237]
 
-[node name="LeftHand" type="XRController3D" parent="XROrigin3D" unique_id=703609986]
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=69536690]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1672034998]
+
+[node name="LeftController" type="XRController3D" parent="." unique_id=305286749]
 tracker = &"left_hand"
-script = ExtResource("2_h2yge")
 
-[node name="XRController3D" type="XRController3D" parent="XROrigin3D/LeftHand" unique_id=1457212450]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftController" unique_id=1898339605]
+mesh = SubResource("BoxMesh_m5ej7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftHand" unique_id=1460239322]
-mesh = SubResource("BoxMesh_440k2")
+[node name="HandArea" type="Area3D" parent="LeftController" unique_id=2040263848]
 
-[node name="RightHand" type="XRController3D" parent="XROrigin3D" unique_id=237704631]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftController/HandArea" unique_id=566608027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+shape = SubResource("SphereShape3D_pfanf")
+
+[node name="RightController" type="XRController3D" parent="." unique_id=1286230403]
 tracker = &"right_hand"
-script = ExtResource("2_h2yge")
 
-[node name="XRController3D" type="XRController3D" parent="XROrigin3D/RightHand" unique_id=1811978765]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightController" unique_id=396688961]
+mesh = SubResource("BoxMesh_vkmgk")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightHand" unique_id=1938015124]
-mesh = SubResource("BoxMesh_440k2")
+[node name="HandArea" type="Area3D" parent="RightController" unique_id=1832655153]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=984340597]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightController/HandArea" unique_id=1941194959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.05)
+shape = SubResource("SphereShape3D_pfanf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1023253672]
-mesh = SubResource("BoxMesh_ig7tw")
+[node name="PatchWindow" type="Node3D" parent="." unique_id=1987865832]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 1, -1)
+script = ExtResource("2_0xm2m")
 
-[node name="PatchWindowViewport" type="SubViewport" parent="." unique_id=725745337]
-size = Vector2i(500, 400)
+[node name="PatchWindowViewport" type="SubViewport" parent="PatchWindow" unique_id=1334226867]
+size = Vector2i(1024, 768)
+render_target_update_mode = 4
 
-[node name="Control" type="Control" parent="PatchWindowViewport" unique_id=2083757823]
+[node name="Control" type="Control" parent="PatchWindow/PatchWindowViewport" unique_id=1598612402]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="PatchWindowViewport/Control" unique_id=593981339]
-custom_minimum_size = Vector2(500, 400)
+[node name="ColorRect" type="ColorRect" parent="PatchWindow/PatchWindowViewport/Control" unique_id=1963890133]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-color = Color(0, 1, 0, 1)
+color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 
-[node name="PatchScreen" type="MeshInstance3D" parent="." unique_id=1595137141]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.5)
-mesh = SubResource("PlaneMesh_s3ndk")
+[node name="PatchScreenMesh" type="MeshInstance3D" parent="PatchWindow" unique_id=784513245]
+mesh = SubResource("QuadMesh_pfanf")
 
-[node name="PatchWindow" type="RigidBody3D" parent="." unique_id=1186153533 groups=["patch_window"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
-gravity_scale = 0.0
-script = ExtResource("2_0xm2m")
+[node name="Area3D" type="Area3D" parent="PatchWindow" unique_id=1856028008]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PatchWindow" unique_id=712495132]
-shape = SubResource("BoxShape3D_440k2")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PatchWindow/Area3D" unique_id=1751386337]
+shape = SubResource("BoxShape3D_pfanf")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PatchWindow" unique_id=1716298025]
-mesh = SubResource("QuadMesh_oeucq")
+[node name="SpawnMenu" type="Node3D" parent="." unique_id=1751197583]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+script = ExtResource("3_h2yge")
 
-[node name="Area3D" type="Area3D" parent="PatchWindow" unique_id=172871228]
+[node name="ObjectBox" type="Node3D" parent="." unique_id=1807624865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PatchWindow/Area3D" unique_id=1437464029]
-shape = SubResource("BoxShape3D_yvwh5")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ObjectBox" unique_id=2055686132]
+mesh = SubResource("BoxMesh_pfanf")
+
+[node name="MessageBox" type="MeshInstance3D" parent="." unique_id=997772650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+script = ExtResource("4_1bvp3")
+pixel_width = null
+
+[node name="NumberBox" type="MeshInstance3D" parent="." unique_id=831539052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+script = ExtResource("5_lquwl")
+
+[node name="SymbolBox" type="MeshInstance3D" parent="." unique_id=1981030890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+script = ExtResource("6_7mycd")

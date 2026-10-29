@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://6ud00y6pbniq"]
+
+[ext_resource type="Script" uid="uid://h77lw26ekbm6" path="res://spawn_menu.gd" id="1_g1y7k"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_g1y7k"]
+viewport_path = NodePath("MenuViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o63wf"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_g1y7k")
+
+[sub_resource type="QuadMesh" id="QuadMesh_g1y7k"]
+material = SubResource("StandardMaterial3D_o63wf")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pfanf"]
+
+[node name="SpawnMenu" type="Node3D" unique_id=1840198105]
+script = ExtResource("1_g1y7k")
+
+[node name="MenuViewport" type="SubViewport" parent="." unique_id=636733352]
+
+[node name="Control" type="VBoxContainer" parent="MenuViewport" unique_id=2075280446]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="--- Modules ---" type="Label" parent="MenuViewport/Control" unique_id=1534616235]
+layout_mode = 2
+
+[node name="Spawn bng" type="Button" parent="MenuViewport/Control" unique_id=2038753662]
+layout_mode = 2
+
+[node name="Spawn osc~" type="Button" parent="MenuViewport/Control" unique_id=708732589]
+layout_mode = 2
+
+[node name="Spawn inlet" type="Button" parent="MenuViewport/Control" unique_id=863970304]
+layout_mode = 2
+
+[node name="Spawn outlet" type="Button" parent="MenuViewport/Control" unique_id=1940514786]
+layout_mode = 2
+
+[node name="MenuMesh" type="MeshInstance3D" parent="." unique_id=1063716732]
+mesh = SubResource("QuadMesh_g1y7k")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=772865977]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=955446518]
+shape = SubResource("BoxShape3D_pfanf")
