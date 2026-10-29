@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://dkhcg7o7hb242"]
+
+[ext_resource type="Script" uid="uid://5scrr4yrj8vs" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://boivbhrxo0hv3" path="res://grabbable_grid.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://1aaojft0vo0w" path="res://xr_grab_handler.gd" id="2_h2yge"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_440k2"]
+size = Vector3(0.05, 0.05, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qu261"]
+viewport_path = NodePath("PatchWindowViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0c4um"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_qu261")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s3ndk"]
+material = SubResource("StandardMaterial3D_0c4um")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_440k2"]
+size = Vector3(1, 0.7, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hsqb2"]
+albedo_color = Color(0, 0, 0, 1)
+stencil_flags = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_oeucq"]
+material = SubResource("StandardMaterial3D_hsqb2")
+size = Vector2(1, 0.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yvwh5"]
+size = Vector3(1.2, 0.9, 0.25)
+
+[node name="Node3D" type="Node3D" unique_id=1468989858]
+script = ExtResource("1_ig7tw")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=791545551]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1961677754]
+
+[node name="LeftHand" type="XRController3D" parent="XROrigin3D" unique_id=703609986]
+tracker = &"left_hand"
+script = ExtResource("2_h2yge")
+
+[node name="XRController3D" type="XRController3D" parent="XROrigin3D/LeftHand" unique_id=1457212450]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftHand" unique_id=1460239322]
+mesh = SubResource("BoxMesh_440k2")
+
+[node name="RightHand" type="XRController3D" parent="XROrigin3D" unique_id=237704631]
+tracker = &"right_hand"
+script = ExtResource("2_h2yge")
+
+[node name="XRController3D" type="XRController3D" parent="XROrigin3D/RightHand" unique_id=1811978765]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightHand" unique_id=1938015124]
+mesh = SubResource("BoxMesh_440k2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=984340597]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1023253672]
+mesh = SubResource("BoxMesh_ig7tw")
+
+[node name="PatchWindowViewport" type="SubViewport" parent="." unique_id=725745337]
+size = Vector2i(500, 400)
+
+[node name="Control" type="Control" parent="PatchWindowViewport" unique_id=2083757823]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="PatchWindowViewport/Control" unique_id=593981339]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 1, 0, 1)
+
+[node name="PatchScreen" type="MeshInstance3D" parent="." unique_id=1595137141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.5)
+mesh = SubResource("PlaneMesh_s3ndk")
+
+[node name="PatchWindow" type="RigidBody3D" parent="." unique_id=1186153533 groups=["patch_window"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+gravity_scale = 0.0
+script = ExtResource("2_0xm2m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PatchWindow" unique_id=712495132]
+shape = SubResource("BoxShape3D_440k2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PatchWindow" unique_id=1716298025]
+mesh = SubResource("QuadMesh_oeucq")
+
+[node name="Area3D" type="Area3D" parent="PatchWindow" unique_id=172871228]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PatchWindow/Area3D" unique_id=1437464029]
+shape = SubResource("BoxShape3D_yvwh5")
